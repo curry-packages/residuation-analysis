@@ -1,0 +1,27 @@
+{
+    "name": "residuation-analysis",
+    "version": "0.0.1",
+    "author": "Michael Hanus <mh@informatik.uni-kiel.de>",
+    "synopsis": "Analyzing the residuation behavior of Curry programs",
+    "category": [ "Analysis" ],
+    "license": "BSD-3-Clause",
+    "licenseFile": "LICENSE",
+    "dependencies": {
+        "cass"         : ">= 2.0.0",
+        "cass-analysis": ">= 2.0.0",
+        "csv"          : ">= 1.0.0",
+        "flatcurry"    : ">= 2.0.0"
+    },
+    "compilerCompatibility": {
+        "pakcs": ">= 2.0.0",
+        "kics2": ">= 2.0.0"
+    },
+    "executable": {
+        "name": "curry-anaresinfo",
+        "main": "AnalyzeResiduation"
+    },
+    "source": {
+        "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/residuation-analysis.git",
+        "tag": "$version"
+    }
+}
