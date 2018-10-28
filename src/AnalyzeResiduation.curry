@@ -8,17 +8,17 @@
 --- @version September 2018
 --------------------------------------------------------------------------
 
-import Directory    ( createDirectoryIfMissing )
-import Distribution ( addCurrySubdir, lookupModuleSourceInLoadPath
-                    , modNameToPath )
-import FilePath     ( (</>), takeDirectory )
-import List         ( intercalate, partition )
-import System       ( getArgs )
+import System.Directory    ( createDirectoryIfMissing )
+import System.FilePath     ( (</>), takeDirectory )
+import System.Environment  ( getArgs )
+import Data.List           ( intercalate, partition )
+import Distribution        ( addCurrySubdir, lookupModuleSourceInLoadPath
+                           , modNameToPath )
 
 import FlatCurry.Types      ( QName, showQName )
 import CASS.Server          ( analyzeGeneric )
 import Analysis.ProgInfo    ( progInfo2Lists )
-import Analysis.Residuation 
+import Analysis.Residuation
 import Text.CSV             ( showCSV )
 
 import ToolOptions
