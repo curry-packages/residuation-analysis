@@ -5,12 +5,10 @@
 --- the implementation of non-residuating operations.
 ---
 --- @author Michael Hanus
---- @version September 2018
+--- @version December 2018
 --------------------------------------------------------------------------
 
 import Directory    ( createDirectoryIfMissing )
-import Distribution ( addCurrySubdir, lookupModuleSourceInLoadPath
-                    , modNameToPath )
 import FilePath     ( (</>), takeDirectory )
 import List         ( intercalate, partition )
 import System       ( getArgs )
@@ -19,6 +17,8 @@ import FlatCurry.Types      ( QName, showQName )
 import CASS.Server          ( analyzeGeneric )
 import Analysis.ProgInfo    ( progInfo2Lists )
 import Analysis.Residuation 
+import System.CurryPath     ( addCurrySubdir, lookupModuleSourceInLoadPath
+                            , modNameToPath )
 import Text.CSV             ( showCSV )
 
 import ToolOptions
@@ -55,7 +55,7 @@ genResInfo :: Options -> String -> IO ()
 genResInfo opts mname =
   lookupModuleSourceInLoadPath mname >>=
   maybe (error $ "Source of module '" ++ mname ++ "' not found!")
-    (\ (dir,_) -> do
+    (\_ -> do
       printWhenStatus opts $ "Analyzing module " ++ mname ++ "..."
       resinfos <- residuationInfoOf mname
       when (optShow opts) $ putStrLn $

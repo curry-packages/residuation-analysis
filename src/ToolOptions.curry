@@ -2,7 +2,7 @@
 --- The options of the residuation analysis tool.
 ---
 --- @author Michael Hanus
---- @version September 2018
+--- @version December 2018
 -------------------------------------------------------------------------
 
 module ToolOptions
@@ -11,10 +11,11 @@ module ToolOptions
   )
  where
 
-import Distribution      ( stripCurrySuffix )
 import GetOpt
 import ReadNumeric       ( readNat )
 import System            ( exitWith )
+
+import System.CurryPath  ( stripCurrySuffix )
 
 data Options = Options
   { optVerb        :: Int  -- verbosity (0: quiet, 1: status, 2: intern, 3: all)
