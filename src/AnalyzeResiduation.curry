@@ -5,20 +5,21 @@
 --- the implementation of non-residuating operations.
 ---
 --- @author Michael Hanus
---- @version December 2018
+--- @version December 2020
 --------------------------------------------------------------------------
 
-import Directory    ( createDirectoryIfMissing )
-import FilePath     ( (</>), takeDirectory )
-import List         ( intercalate, partition )
-import System       ( getArgs )
+import Control.Monad        ( when, unless )
+import Data.List            ( intercalate, partition )
+import System.Environment   ( getArgs )
 
-import FlatCurry.Types      ( QName, showQName )
-import CASS.Server          ( analyzeGeneric )
 import Analysis.ProgInfo    ( progInfo2Lists )
 import Analysis.Residuation 
+import CASS.Server          ( analyzeGeneric )
+import FlatCurry.Types      ( QName, showQName )
 import System.CurryPath     ( addCurrySubdir, lookupModuleSourceInLoadPath
                             , modNameToPath )
+import System.Directory     ( createDirectoryIfMissing )
+import System.FilePath      ( (</>), takeDirectory )
 import Text.CSV             ( showCSV )
 
 import ToolOptions
@@ -28,7 +29,7 @@ import ToolOptions
 banner :: String
 banner = unlines [bannerLine,bannerText,bannerLine]
  where
-   bannerText = "Residuation Analysis Tool for Curry (Version of 12/09/18)"
+   bannerText = "Residuation Analysis Tool for Curry (Version of 18/12/20)"
    bannerLine = take (length bannerText) (repeat '=')
 
 ---------------------------------------------------------------------------
@@ -41,7 +42,7 @@ main = do
     then putStrLn "ERROR: wrong arguments (try `--help' option)"
     else if optShowStats opts
            then countResOps2CSV mods
-           else mapIO_ (genResInfo opts) mods
+           else mapM_ (genResInfo opts) mods
 
 --- Returns the residuation information of all operations defined
 --- in a module.
@@ -111,6 +112,6 @@ countResOps mname = do
 
 countResOps2CSV :: [String] -> IO ()
 countResOps2CSV mods = do
-  stats <- mapIO countResOps mods
+  stats <- mapM countResOps mods
   let table = ["Module", "Non-residuating", "Residuating", "Unknown"] : stats
   putStr (showCSV table)
