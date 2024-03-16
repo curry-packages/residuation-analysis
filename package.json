@@ -22,7 +22,7 @@
         "main": "AnalyzeResiduation"
     },
     "source": {
-        "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/residuation-analysis.git",
+        "git": "https://github.com/curry-packages/residuation-analysis.git",
         "tag": "$version"
     }
 }
